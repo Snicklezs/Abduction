@@ -5,8 +5,6 @@ from sys import exit
 Author = "William DeBattista"
 Email = "williamsecord@hotmail.com" 
 
-addresses = {'RoomOne': 'You enter the jail room'}
-
 def Introduction():
 	""" Introduction to the game """ 
 	global N 
@@ -137,9 +135,44 @@ def throwFood():
 		print N 
 		print "You are now free to explore the room - though it looks pretty dead... Perhaps the locker might contain something useful." 
 		print N 
+	
 	else:
 		dead("You fumble around and die - Cause unknown - But we do know you're an' idiot")
-				
+		
+def RoomEscaped():
+	""" You are now escaped - Go to the locker and grab the code for the door """ 
+	
+	escaped = raw_input("> ").lower().split() 
+	locker = False 
+	
+	while True:
+	
+		if "north" in escaped:
+			north("The switch is now switched ON. A door is next to the switch, it appears to require some sort of code") 
+		
+		elif "east" in escaped:
+			east("A bare wall is here") 
+		
+		elif "south" in escaped:
+			south("Another wall - What do ya expect it's a prison cell") 
+		
+		elif "west" in escaped and locker is False:
+			west("A locker stands tall on the west-side wall, fortunately their appears to be no lock") 
+			Locker() 
+			locker = True 
+			
+def Locker():
+	
+	open = raw_input("> ").lower().split() 
+	while True:
+		if 'open' in open:
+			print N 
+			print "You open the locker - A strange document presents itself, it reads:"
+			print "1001 starting from left to right add 1s as powers of 2"
+		else:
+			print N 
+			print "" 
+			
 ###############################################################################
 #                  Anything under here is globally used                       #            
 #                  Testing an inventory appender                              #                                                                          
@@ -158,11 +191,7 @@ def observe(No, Ea, So, We):
 	print "To your East is: ", Ea 
 	print "To your South is: ", So 
 	print "To your West is: ", We 
-	
-def inspect(self, about):
-	string = "You inspect %s: " % self
-	print string + about 
-	
+		
 def north(self):
 	print "You are now north:", self 
 	
